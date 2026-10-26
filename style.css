@@ -1,0 +1,172 @@
+/*
+Theme Name: Advisers Multipurpose
+Theme URI: https://myadvisers.in/advisers-multipurpose
+Author: Biswajit Barman
+Author URI: https://myadvisers.in
+Description: A multipurpose, SEO-optimised, lightning-fast, fully responsive WordPress theme with a custom header, footer, sidebar and a native block-based page builder experience. Built for My Advisers.
+Version: 1.4.2
+Requires at least: 6.5
+Tested up to: 7.1
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: advisers-multipurpose
+Tags: custom-background, custom-logo, custom-menu, custom-colors, featured-images, threaded-comments, translation-ready, block-patterns, block-styles, editor-style, footer-widgets, theme-options, two-columns, left-sidebar, right-sidebar, one-column
+*/
+
+/*
+ * Advisers Multipurpose
+ *
+ * Copyright (C) 2026 Biswajit Barman / My Advisers.
+ *
+ * This theme, like WordPress, is licensed under the GPL.
+ * Use it to make something cool, have fun, and share what
+ * you've learned with others.
+ *
+ * Advisers Multipurpose is distributed under the terms of
+ * the GNU GPL v2 or later.
+ *
+ * This program is free software: you can redistribute it
+ * and/or modify it under the terms of the GNU General Public
+ * License as published by the Free Software Foundation,
+ * either version 2 of the License, or (at your option) any
+ * later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * See the GNU General Public License for more details.
+ *
+ * A copy of the GNU General Public License is included in this
+ * theme's license.txt file.
+ *
+ * The theme bundles no third-party code, fonts, images, or icon sets.
+ * All CSS and JavaScript in this theme is authored from scratch by
+ * Biswajit Barman / My Advisers.
+ */
+
+/* =========================================================
+ * BASE / CRITICAL RESET
+ * =========================================================
+ *
+ * The complete visual design system is maintained in:
+ *
+ *     assets/css/main.css
+ *
+ * This file intentionally remains lightweight because WordPress
+ * requires style.css to contain the theme header metadata.
+ * ========================================================= */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	width: 100%;
+	max-width: 100%;
+	margin: 0;
+	padding: 0;
+
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
+}
+
+body {
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+}
+
+img,
+svg,
+video,
+canvas {
+	max-width: 100%;
+	height: auto;
+}
+
+img {
+	display: block;
+}
+
+/*
+ * Prevent embedded media and long content from producing
+ * accidental horizontal overflow before main.css loads.
+ */
+iframe,
+embed,
+object {
+	max-width: 100%;
+}
+
+/*
+ * Prevent long URLs and unbroken text from expanding the
+ * document horizontally.
+ */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+li,
+blockquote,
+pre,
+code {
+	overflow-wrap: break-word;
+}
+
+/*
+ * Preserve accessible focus visibility during the critical
+ * rendering stage. main.css provides the complete focus design.
+ */
+:focus-visible {
+	outline: 2px solid #0b5fff;
+	outline-offset: 2px;
+}
+
+/*
+ * WordPress admin-bar compatibility.
+ *
+ * The actual layout and sticky-footer behavior is handled by
+ * assets/css/main.css and assets/css/main.min.css.
+ */
+#page,
+#page.site,
+.site {
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+}
+
+/*
+ * Avoid accidental spacing caused by the final element while
+ * the main production stylesheet is loading.
+ */
+#page > *:last-child {
+	margin-bottom: 0;
+}
+
+/*
+ * Respect reduced-motion preferences.
+ *
+ * Components that define transitions in main.css can still
+ * override this when necessary.
+ */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		scroll-behavior: auto !important;
+		transition-duration: 0.01ms !important;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+	}
+}

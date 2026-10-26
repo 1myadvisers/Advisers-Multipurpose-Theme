@@ -1,0 +1,2569 @@
+/* =========================================================
+ * Advisers Multipurpose — main.css
+ *
+ * Production stylesheet
+ * Mobile-first
+ * Vanilla CSS
+ * No framework / no build step required
+ *
+ * Focus:
+ * - Stable responsive layout
+ * - Balanced left/right spacing
+ * - Shortcode/widget containment
+ * - Search Partners card-grid protection
+ * - Prevent content overlap
+ * - Sidebar separation
+ * - Stable footer positioning
+ * - WordPress compatibility
+ * ========================================================= */
+
+
+/* =========================================================
+ * 1. DESIGN TOKENS
+ * ========================================================= */
+
+:root {
+	--am-color-primary: #0b5fff;
+	--am-color-primary-dark: #084dcc;
+	--am-color-secondary: #111827;
+	--am-color-text: #1f2430;
+	--am-color-muted: #6b7280;
+	--am-color-border: #e5e7eb;
+	--am-color-bg: #ffffff;
+	--am-color-bg-alt: #f7f8fa;
+
+	--am-header-bg: #ffffff;
+	--am-header-text: #111827;
+
+	--am-nav-bg: #1e3a8a;
+	--am-nav-text: #ffffff;
+
+	--am-font-body:
+		-apple-system,
+		BlinkMacSystemFont,
+		"Segoe UI",
+		Roboto,
+		Helvetica,
+		Arial,
+		sans-serif;
+
+	--am-font-heading: var(--am-font-body);
+
+	--am-space-1: 0.5rem;
+	--am-space-2: 1rem;
+	--am-space-3: 1.5rem;
+	--am-space-4: 2.5rem;
+	--am-space-5: 4rem;
+
+	--am-gutter: clamp(1rem, 3vw, 2rem);
+
+	--am-radius: 8px;
+	--am-transition: 150ms ease-in-out;
+
+	--am-container-width: 95%;
+	--am-container-max-width: 1400px;
+
+	--am-content-max-width: 900px;
+	--am-sidebar-width: 300px;
+
+	--am-focus-ring: 0 0 0 3px rgba(11, 95, 255, 0.25);
+}
+
+
+/* =========================================================
+ * 2. GLOBAL BOX MODEL
+ * ========================================================= */
+
+html {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+	overflow-x: hidden;
+
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+}
+
+html,
+body {
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: var(--am-font-body);
+	font-size: var(--am-font-size-base, 17px);
+	line-height: 1.6;
+
+	color: var(--am-color-text);
+	background-color: var(--am-color-bg);
+
+	-webkit-text-size-adjust: 100%;
+	text-rendering: optimizeLegibility;
+
+	overflow-x: hidden;
+}
+
+#page,
+#page.site,
+.site {
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+
+	margin: 0;
+	padding: 0;
+}
+
+
+/* =========================================================
+ * 3. COLOR SCHEME
+ * ========================================================= */
+
+body.color-scheme-dark {
+	--am-color-text: #e5e7eb;
+	--am-color-muted: #9aa3b2;
+	--am-color-border: #2a3242;
+	--am-color-bg: #12151c;
+	--am-color-bg-alt: #1a1f2b;
+}
+
+body.color-scheme-dark h1,
+body.color-scheme-dark h2,
+body.color-scheme-dark h3,
+body.color-scheme-dark h4,
+body.color-scheme-dark h5,
+body.color-scheme-dark h6 {
+	color: #f3f4f6;
+}
+
+@media (prefers-color-scheme: dark) {
+
+	body.color-scheme-auto {
+		--am-color-text: #e5e7eb;
+		--am-color-muted: #9aa3b2;
+		--am-color-border: #2a3242;
+		--am-color-bg: #12151c;
+		--am-color-bg-alt: #1a1f2b;
+	}
+
+	body.color-scheme-auto h1,
+	body.color-scheme-auto h2,
+	body.color-scheme-auto h3,
+	body.color-scheme-auto h4,
+	body.color-scheme-auto h5,
+	body.color-scheme-auto h6 {
+		color: #f3f4f6;
+	}
+}
+
+
+/* =========================================================
+ * 4. TYPOGRAPHY
+ * ========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--am-font-heading);
+	color: var(--am-color-secondary);
+
+	line-height: 1.25;
+	font-weight: 700;
+
+	margin: 0 0 var(--am-space-2);
+
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+}
+
+h1 {
+	font-size: clamp(
+		2rem,
+		4vw,
+		calc(3rem * var(--am-heading-scale, 1))
+	);
+}
+
+h2 {
+	font-size: clamp(
+		1.5rem,
+		3vw,
+		calc(2.25rem * var(--am-heading-scale, 1))
+	);
+}
+
+h3 {
+	font-size: clamp(
+		1.2rem,
+		2vw,
+		calc(1.5rem * var(--am-heading-scale, 1))
+	);
+}
+
+h4 {
+	font-size: 1.25rem;
+}
+
+h5 {
+	font-size: 1.1rem;
+}
+
+h6 {
+	font-size: 1rem;
+}
+
+p {
+	margin: 0 0 var(--am-space-2);
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+}
+
+img,
+svg,
+video,
+canvas {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+iframe,
+embed,
+object {
+	display: block;
+	max-width: 100%;
+}
+
+figure {
+	margin: 0 0 var(--am-space-3);
+}
+
+pre,
+code {
+	max-width: 100%;
+}
+
+pre {
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+blockquote {
+	margin: var(--am-space-3) 0;
+	padding-left: var(--am-space-2);
+	border-left: 4px solid var(--am-color-primary);
+}
+
+a {
+	color: var(--am-color-primary);
+	text-decoration: none;
+
+	transition:
+		color var(--am-transition),
+		opacity var(--am-transition);
+}
+
+a:hover,
+a:focus {
+	color: var(--am-color-secondary);
+}
+
+
+/* =========================================================
+ * 5. ACCESSIBILITY
+ * ========================================================= */
+
+.screen-reader-text {
+	position: absolute !important;
+
+	width: 1px;
+	height: 1px;
+
+	padding: 0;
+	margin: -1px;
+
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+
+	white-space: nowrap;
+	border: 0;
+}
+
+.skip-link.screen-reader-text:focus {
+	position: fixed;
+
+	top: 0;
+	left: 0;
+
+	width: auto;
+	height: auto;
+
+	margin: 0;
+	padding: var(--am-space-1) var(--am-space-2);
+
+	background: var(--am-color-secondary);
+	color: #fff;
+
+	z-index: 999999;
+
+	clip: auto;
+	white-space: normal;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+	outline: 2px solid var(--am-color-primary);
+	outline-offset: 2px;
+	box-shadow: var(--am-focus-ring);
+}
+
+
+/* =========================================================
+ * 6. GLOBAL WordPress WRAPPERS
+ * ========================================================= */
+
+.site-header,
+.site-main,
+.site-content,
+.site-footer,
+.main-navigation,
+.header-top,
+.breadcrumbs-wrap {
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+}
+
+
+/* =========================================================
+ * 7. CONTAINERS
+ * ========================================================= */
+
+.container {
+	width: var(--am-container-width);
+	max-width: var(--am-container-max-width);
+
+	margin-inline: auto;
+
+	min-width: 0;
+}
+
+body.container-wide .container {
+	width: 97%;
+	max-width: 1500px;
+}
+
+body.container-fluid .container {
+	width: 100%;
+	max-width: none;
+
+	padding-inline: var(--am-space-2);
+}
+
+
+/* =========================================================
+ * 8. MAIN LAYOUT
+ * ========================================================= */
+
+.layout-wrap {
+	display: flex;
+
+	flex-wrap: nowrap;
+	align-items: flex-start;
+
+	gap: var(--am-space-4);
+
+	width: 95%;
+	max-width: var(--am-container-max-width);
+
+	min-width: 0;
+
+	margin-inline: auto;
+
+	padding-block: var(--am-space-4);
+}
+
+#primary {
+	flex: 1 1 auto;
+
+	width: auto;
+	max-width: 100%;
+	min-width: 0;
+}
+
+body.layout-none #primary {
+	flex: 1 1 100%;
+
+	width: 100%;
+	max-width: 100%;
+}
+
+body.layout-left .layout-wrap {
+	flex-direction: row-reverse;
+}
+
+#secondary {
+	flex: 0 0 var(--am-sidebar-width);
+
+	width: var(--am-sidebar-width);
+	max-width: 100%;
+	min-width: 0;
+}
+
+
+/* =========================================================
+ * 9. CONTENT FLOW PROTECTION
+ *
+ * IMPORTANT:
+ *
+ * Search/partner shortcodes frequently contain floated,
+ * absolutely-positioned, or dynamically generated cards.
+ *
+ * These rules prevent those elements from allowing the
+ * following heading/content to rise underneath the widget.
+ * ========================================================= */
+
+.entry-content {
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+
+	/*
+	 * Establish a new block formatting context.
+	 * This contains internal floats.
+	 */
+	display: flow-root;
+}
+
+/*
+ * Every direct content section clears preceding floats.
+ *
+ * This is particularly important for shortcode-generated
+ * card grids.
+ */
+.entry-content > * {
+	min-width: 0;
+	max-width: 100%;
+
+	clear: both;
+}
+
+/*
+ * Prevent negative/undefined vertical collapse between
+ * shortcode widgets and following headings.
+ */
+.entry-content > * + * {
+	margin-top: var(--am-space-2);
+}
+
+/*
+ * Explicit content-section containment.
+ */
+.entry-content > section,
+.entry-content > article,
+.entry-content > aside,
+.entry-content > div,
+.entry-content > figure,
+.entry-content > form,
+.entry-content > nav {
+	display: flow-root;
+}
+
+
+/* =========================================================
+ * 10. SHORTCODE / DYNAMIC CONTENT CONTAINMENT
+ * ========================================================= */
+
+/*
+ * Generic shortcode containers.
+ */
+[class*="shortcode"],
+[class*="widget-area"],
+[class*="directory"],
+[class*="listing"],
+[class*="search-results"],
+[class*="search-result"] {
+	min-width: 0;
+	max-width: 100%;
+}
+
+/*
+ * Common partner-directory selectors.
+ *
+ * These rules are intentionally defensive and do not depend
+ * on one specific shortcode implementation.
+ */
+.search-partners,
+.search-partners-widget,
+.partner-directory,
+.partner-directory-widget,
+.partner-list,
+.partner-listing,
+.partner-listings,
+.partner-results,
+.partner-results-grid,
+.partner-grid,
+.partner-grid-wrapper,
+.service-directory,
+.service-directory-widget,
+.service-listing,
+.service-listings,
+.service-provider-list,
+.service-provider-grid,
+.provider-directory,
+.provider-list,
+.compare-list,
+.compare-grid {
+	display: flow-root;
+
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+
+	clear: both;
+
+	position: relative;
+
+	overflow: visible;
+}
+
+/*
+ * Prevent individual cards from escaping their grid.
+ */
+.search-partners *,
+.search-partners-widget *,
+.partner-directory *,
+.partner-directory-widget *,
+.partner-list *,
+.partner-listing *,
+.partner-listings *,
+.partner-results *,
+.partner-results-grid *,
+.partner-grid *,
+.partner-grid-wrapper *,
+.service-directory *,
+.service-directory-widget *,
+.service-listing *,
+.service-listings *,
+.service-provider-list *,
+.service-provider-grid *,
+.provider-directory *,
+.provider-list *,
+.compare-list *,
+.compare-grid * {
+	max-width: 100%;
+	min-width: 0;
+}
+
+
+/* =========================================================
+ * 11. SIDEBAR TOGGLE
+ * ========================================================= */
+
+.sidebar-toggle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	width: 100%;
+	max-width: 100%;
+
+	margin: 0 0 var(--am-space-2);
+	padding: 0.6rem 0.9rem;
+
+	background: var(--am-color-bg-alt);
+
+	border: 1px solid var(--am-color-border);
+	border-radius: var(--am-radius);
+
+	cursor: pointer;
+
+	font-family: inherit;
+	font-size: 0.9rem;
+	font-weight: 600;
+
+	color: var(--am-color-secondary);
+}
+
+.sidebar-toggle::after {
+	content: "\2212";
+	font-weight: 700;
+}
+
+#secondary.sidebar-collapsed .sidebar-toggle::after {
+	content: "+";
+}
+
+.sidebar-toggle-label-show {
+	display: none;
+}
+
+#secondary.sidebar-collapsed .sidebar-toggle-label-hide {
+	display: none;
+}
+
+#secondary.sidebar-collapsed .sidebar-toggle-label-show {
+	display: inline;
+}
+
+#secondary.sidebar-collapsed .sidebar-content {
+	display: none;
+}
+
+
+/* =========================================================
+ * 12. CONTENT SCROLLING
+ * ========================================================= */
+
+#primary.content-scrollable {
+	overflow-y: auto;
+	overflow-x: hidden;
+
+	padding-right: var(--am-space-1);
+
+	scrollbar-width: thin;
+	scrollbar-color:
+		var(--am-color-border)
+		transparent;
+
+	-webkit-overflow-scrolling: touch;
+}
+
+#primary.content-scrollable::-webkit-scrollbar {
+	width: 8px;
+}
+
+#primary.content-scrollable::-webkit-scrollbar-thumb {
+	background: var(--am-color-border);
+	border-radius: 8px;
+}
+
+
+/* =========================================================
+ * 13. HEADER
+ * ========================================================= */
+
+.site-header {
+	position: relative;
+	background: var(--am-color-bg);
+}
+
+.header-top {
+	background: var(--am-header-bg, var(--am-color-bg));
+	border-bottom: 1px solid var(--am-color-border);
+}
+
+.header-top-inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	gap: var(--am-space-3);
+
+	width: 100%;
+	max-width: var(--am-container-max-width);
+	min-width: 0;
+
+	padding-block: var(--am-space-2);
+
+	/* Comfortable space from the left and right screen edges, including
+	   notched phones, so the header button never touches the edge. */
+	padding-left: max(var(--am-gutter), env(safe-area-inset-left));
+	padding-right: max(var(--am-gutter), env(safe-area-inset-right));
+}
+
+.header-branding-group {
+	display: flex;
+	align-items: center;
+
+	gap: var(--am-space-1);
+
+	min-width: 0;
+}
+
+.header-branding-center {
+	text-align: left;
+	min-width: 0;
+}
+
+.header-branding-cta {
+	flex-shrink: 0;
+}
+
+.header-right-group {
+	display: flex;
+	align-items: center;
+
+	gap: var(--am-space-2);
+
+	flex-shrink: 0;
+}
+
+.custom-logo {
+	display: block;
+
+	width: auto;
+	max-width: 100%;
+	max-height: 60px;
+}
+
+.site-logo-fallback {
+	font-size: 1.5rem;
+	font-weight: 700;
+
+	color: var(
+		--am-header-text,
+		var(--am-color-secondary)
+	);
+}
+
+.site-title {
+	margin: 0;
+
+	font-size: 1.6rem;
+	line-height: 1.2;
+
+	overflow-wrap: anywhere;
+}
+
+.site-title a {
+	color: var(
+		--am-header-text,
+		var(--am-color-secondary)
+	);
+}
+
+.site-description {
+	margin: 0.15rem 0 0;
+
+	font-size: 0.9rem;
+
+	color: var(
+		--am-header-text,
+		var(--am-color-muted)
+	);
+
+	opacity: 0.75;
+
+	overflow-wrap: anywhere;
+}
+
+.header-cta-button {
+	display: inline-block;
+	margin-inline-end: var(--am-space-1);
+
+	background: var(--am-color-primary);
+	color: #fff !important;
+
+	padding: 0.6rem 1.2rem;
+
+	border-radius: var(--am-radius);
+
+	font-weight: 600;
+
+	white-space: nowrap;
+}
+
+.header-cta-button:hover {
+	background: var(--am-color-primary-dark);
+	color: #fff !important;
+}
+
+
+/* =========================================================
+ * 14. NAVIGATION
+ * ========================================================= */
+
+.main-navigation {
+	background: var(--am-nav-bg, var(--am-color-secondary));
+}
+
+.nav-inner {
+	display: flex;
+
+	align-items: center;
+	justify-content: center;
+
+	position: relative;
+
+	width: 100%;
+	max-width: var(--am-container-max-width);
+	min-width: 0;
+
+	padding-left: max(var(--am-gutter), env(safe-area-inset-left));
+	padding-right: max(var(--am-gutter), env(safe-area-inset-right));
+}
+
+.main-navigation ul#primary-menu {
+	display: flex;
+
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+
+	gap: var(--am-space-3);
+
+	list-style: none;
+
+	margin: 0;
+	padding: 0;
+
+	width: auto;
+	max-width: 100%;
+}
+
+.main-navigation li {
+	position: relative;
+
+	margin: 0;
+	padding: 0;
+}
+
+.main-navigation a {
+	display: block;
+
+	color: var(--am-nav-text, #fff);
+
+	font-weight: 500;
+
+	padding: 0.9rem 0.2rem;
+
+	border-bottom: 2px solid transparent;
+
+	transition:
+		border-color var(--am-transition),
+		color var(--am-transition);
+}
+
+.main-navigation a:hover,
+.main-navigation a:focus,
+.main-navigation .current-menu-item > a {
+	color: var(--am-nav-text, #fff);
+	border-bottom-color: var(--am-color-primary);
+}
+
+.main-navigation ul ul {
+	position: absolute;
+
+	top: 100%;
+	left: 0;
+
+	display: none;
+	flex-direction: column;
+
+	min-width: 200px;
+
+	margin: 0;
+	padding: 0;
+
+	background: var(
+		--am-nav-bg,
+		var(--am-color-secondary)
+	);
+
+	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+
+	z-index: 1000;
+}
+
+.main-navigation ul ul a {
+	padding: 0.75rem 1rem;
+
+	border-bottom: none;
+	border-left: 2px solid transparent;
+}
+
+.main-navigation ul ul a:hover,
+.main-navigation ul ul a:focus {
+	border-left-color: var(--am-color-primary);
+}
+
+.main-navigation li:hover > ul,
+.main-navigation li:focus-within > ul {
+	display: flex;
+}
+
+.menu-toggle {
+	display: none;
+
+	background: transparent;
+	border: 0;
+
+	cursor: pointer;
+
+	padding: 0;
+
+	color: var(--am-nav-text, #fff);
+}
+
+.menu-toggle-bar {
+	display: block;
+
+	width: 24px;
+	height: 2px;
+
+	margin: 5px 0;
+
+	background: var(--am-nav-text, #fff);
+}
+
+
+/* =========================================================
+ * 15. BREADCRUMBS
+ * ========================================================= */
+
+.breadcrumbs-wrap {
+	padding-block: var(--am-space-1);
+
+	font-size: 0.9rem;
+	color: var(--am-color-muted);
+
+	overflow-wrap: break-word;
+}
+
+.advisers-multipurpose-breadcrumbs a {
+	color: var(--am-color-muted);
+}
+
+
+/* =========================================================
+ * 16. CONTENT
+ * ========================================================= */
+
+.entry-title {
+	margin-bottom: var(--am-space-1);
+}
+
+.entry-meta,
+.byline,
+.posted-on {
+	color: var(--am-color-muted);
+	font-size: 0.9rem;
+}
+
+.entry-content img {
+	max-width: 100%;
+	height: auto;
+	border-radius: var(--am-radius);
+}
+
+.page-featured-image,
+.post-featured-image {
+	margin-bottom: var(--am-space-3);
+}
+
+.page-featured-image img,
+.post-featured-image img {
+	display: block;
+
+	width: 100%;
+	height: auto;
+
+	border-radius: var(--am-radius);
+}
+
+
+/* =========================================================
+ * 17. POST / ARCHIVE CARDS
+ * ========================================================= */
+
+.post-list {
+	display: grid;
+
+	grid-template-columns:
+		repeat(
+			auto-fill,
+			minmax(min(280px, 100%), 1fr)
+		);
+
+	gap: var(--am-space-3);
+
+	width: 100%;
+	max-width: 100%;
+
+	clear: both;
+}
+
+body.blog-columns-1 .post-list {
+	grid-template-columns: 1fr;
+}
+
+body.blog-columns-2 .post-list {
+	grid-template-columns:
+		repeat(2, minmax(0, 1fr));
+}
+
+body.blog-columns-3 .post-list {
+	grid-template-columns:
+		repeat(3, minmax(0, 1fr));
+}
+
+.post-card {
+	display: flex;
+	flex-direction: column;
+
+	min-width: 0;
+
+	overflow: hidden;
+
+	background: var(--am-color-bg);
+
+	border: 1px solid var(--am-color-border);
+	border-radius: var(--am-radius);
+}
+
+.post-card-thumb img {
+	display: block;
+
+	width: 100%;
+
+	aspect-ratio: 16 / 10;
+
+	object-fit: cover;
+}
+
+.post-card-body {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+
+	gap: 0.4rem;
+
+	padding: var(--am-space-2);
+
+	min-width: 0;
+}
+
+.post-card .entry-title {
+	font-size: 1.15rem;
+	margin: 0;
+}
+
+.read-more {
+	margin-top: auto;
+	font-weight: 600;
+}
+
+
+/* =========================================================
+ * 18. WIDGETS / SIDEBAR
+ * ========================================================= */
+
+.widget {
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+
+	margin-bottom: var(--am-space-3);
+
+	overflow-wrap: break-word;
+}
+
+.widget-title {
+	font-size: 1.1rem;
+	margin-bottom: var(--am-space-1);
+}
+
+.widget ul,
+.widget ol {
+	max-width: 100%;
+	overflow-wrap: break-word;
+}
+
+
+/* =========================================================
+ * 19. FOOTER
+ * ========================================================= */
+
+.site-footer {
+	width: 100%;
+	max-width: 100%;
+
+	margin-top: var(--am-space-5);
+
+	background: var(--am-color-bg-alt);
+
+	border-top: 1px solid var(--am-color-border);
+}
+
+/* ---- Footer: top bar -------------------------------------------------- */
+
+.footer-topbar {
+	background: var(--am-color-secondary);
+	color: #fff;
+	font-size: 0.95rem;
+}
+
+.footer-topbar-inner,
+.footer-widgets-wrap,
+.footer-social,
+.site-info {
+	width: 100%;
+	max-width: var(--am-container-max-width);
+	margin-inline: auto;
+
+	padding-left: max(var(--am-gutter), env(safe-area-inset-left));
+	padding-right: max(var(--am-gutter), env(safe-area-inset-right));
+}
+
+.footer-topbar-inner {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+
+	gap: var(--am-space-1) var(--am-space-3);
+
+	padding-block: 0.75rem;
+}
+
+.footer-topbar a {
+	color: inherit;
+}
+
+.footer-topbar-message {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 1rem;
+
+	margin: 0;
+}
+
+.footer-topbar-button {
+	display: inline-block;
+
+	padding: 0.3rem 0.9rem;
+
+	border: 1px solid currentColor;
+	border-radius: var(--am-radius);
+
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.footer-topbar-button:hover,
+.footer-topbar-button:focus {
+	background: #fff;
+	color: var(--am-color-secondary);
+}
+
+.footer-topbar-contact {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem 1.25rem;
+
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+}
+
+.footer-topbar .social-icons a {
+	background: rgba(255, 255, 255, 0.12);
+	color: #fff;
+}
+
+/* ---- Footer: widget rows (3 rows x up to 4 columns) -------------------- */
+
+.footer-widgets-wrap {
+	padding-block: var(--am-space-4);
+}
+
+.footer-widgets {
+	display: grid;
+
+	gap: var(--am-space-3);
+
+	margin-bottom: var(--am-space-4);
+	padding: 0;
+}
+
+.footer-widgets:last-child {
+	margin-bottom: 0;
+}
+
+.footer-widget-area {
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+.footer-widget-area .widget {
+	margin-bottom: var(--am-space-2);
+}
+
+.footer-widget-area .widget:last-child {
+	margin-bottom: 0;
+}
+
+.footer-columns-1 {
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.footer-columns-2 {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.footer-columns-3 {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.footer-columns-4 {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.footer-row + .footer-row {
+	padding-top: var(--am-space-4);
+
+	border-top: 1px solid var(--am-color-border);
+}
+
+/* ---- Footer: bottom bar ------------------------------------------------ */
+
+.footer-bottombar {
+	border-top: 1px solid var(--am-color-border);
+}
+
+.footer-social {
+	display: flex;
+	justify-content: center;
+
+	padding-block: var(--am-space-2);
+}
+
+.site-info {
+	display: flex;
+
+	align-items: center;
+	justify-content: space-between;
+
+	flex-wrap: wrap;
+
+	gap: var(--am-space-1) var(--am-space-3);
+
+	padding-block: var(--am-space-2);
+
+	font-size: 0.9rem;
+	color: var(--am-color-muted);
+}
+
+.site-footer {
+	content-visibility: auto;
+	contain-intrinsic-size: auto 600px;
+}
+
+.footer-navigation ul {
+	display: flex;
+	flex-wrap: wrap;
+
+	gap: var(--am-space-2);
+
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+}
+
+.footer-navigation a {
+	color: var(--am-color-muted);
+}
+
+.theme-credit {
+	margin-inline-start: 0.5em;
+	opacity: 0.85;
+}
+
+.theme-credit a {
+	color: inherit;
+	text-decoration: underline;
+}
+
+
+/* =========================================================
+ * 20. SOCIAL ICONS
+ * ========================================================= */
+
+.social-icons {
+	display: flex;
+
+	align-items: center;
+	flex-wrap: wrap;
+
+	gap: var(--am-space-1);
+
+	margin: 0;
+	padding: 0;
+
+	list-style: none;
+}
+
+.social-icons a {
+	display: inline-flex;
+
+	align-items: center;
+	justify-content: center;
+
+	width: 34px;
+	height: 34px;
+
+	border-radius: 50%;
+
+	color: inherit;
+
+	transition: opacity var(--am-transition);
+}
+
+.social-icons a:hover,
+.social-icons a:focus {
+	opacity: 0.7;
+	color: inherit;
+}
+
+.social-icons svg {
+	display: block;
+
+	width: 16px;
+	height: 16px;
+
+	fill: currentColor;
+}
+
+.icon-size-small .social-icons a {
+	width: 26px;
+	height: 26px;
+}
+
+.icon-size-small .social-icons svg {
+	width: 13px;
+	height: 13px;
+}
+
+.icon-size-medium .social-icons a {
+	width: 34px;
+	height: 34px;
+}
+
+.icon-size-medium .social-icons svg {
+	width: 16px;
+	height: 16px;
+}
+
+.icon-size-large .social-icons a {
+	width: 44px;
+	height: 44px;
+}
+
+.icon-size-large .social-icons svg {
+	width: 21px;
+	height: 21px;
+}
+
+.header-social {
+	color: var(--am-header-text);
+}
+
+.header-social .social-icons a {
+	background: rgba(17, 24, 39, 0.08);
+}
+
+.footer-social .social-icons a {
+	background: var(--am-color-bg);
+	color: var(--am-color-secondary);
+}
+
+
+/* =========================================================
+ * 21. WIDE / FULL WIDTH BLOCKS
+ * ========================================================= */
+
+.entry-content .alignwide {
+	width: 100%;
+	max-width: 1300px;
+
+	margin-inline: auto;
+}
+
+body.layout-none .entry-content .alignfull {
+	width: 100vw;
+	max-width: 100vw;
+
+	margin-left: calc(50% - 50vw);
+	margin-right: calc(50% - 50vw);
+}
+
+body:not(.layout-none) .entry-content .alignfull {
+	width: 100%;
+	max-width: 100%;
+
+	margin-left: 0;
+	margin-right: 0;
+}
+
+
+/* =========================================================
+ * 22. BLOCK PATTERN SECTIONS
+ * ========================================================= */
+
+.am-hero {
+	width: 100%;
+	max-width: 100%;
+
+	padding:
+		var(--am-space-5)
+		var(--am-space-2);
+
+	text-align: center;
+
+	background: var(--am-color-bg-alt);
+}
+
+.am-section {
+	padding-block: var(--am-space-5);
+}
+
+.am-cta-band {
+	width: 100%;
+	max-width: 100%;
+
+	padding:
+		var(--am-space-4)
+		var(--am-space-2);
+
+	background: var(--am-color-primary);
+	color: #fff;
+
+	text-align: center;
+
+	border-radius: var(--am-radius);
+}
+
+.am-cta-band h2 {
+	color: #fff;
+}
+
+.am-pricing-card {
+	padding: var(--am-space-3);
+
+	text-align: center;
+
+	border: 1px solid var(--am-color-border);
+	border-radius: var(--am-radius);
+
+	background: var(--am-color-bg);
+}
+
+.wp-block-button__link {
+	background-color: var(--am-color-primary);
+	border-radius: var(--am-radius);
+}
+
+
+/* =========================================================
+ * 23. FORMS
+ * ========================================================= */
+
+.search-form {
+	display: flex;
+	flex-wrap: wrap;
+
+	gap: 0.5rem;
+
+	width: 100%;
+	max-width: 100%;
+}
+
+.search-field {
+	flex: 1 1 200px;
+
+	min-width: 0;
+
+	padding: 0.6rem 0.8rem;
+
+	border: 1px solid var(--am-color-border);
+	border-radius: var(--am-radius);
+
+	background: var(--am-color-bg);
+	color: var(--am-color-text);
+}
+
+.search-submit {
+	flex: 0 0 auto;
+
+	padding: 0.6rem 1rem;
+
+	background: var(--am-color-primary);
+	color: #fff;
+
+	border: none;
+	border-radius: var(--am-radius);
+
+	cursor: pointer;
+}
+
+input,
+textarea,
+select {
+	display: block;
+
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+
+	font-family: inherit;
+	font-size: 1rem;
+
+	padding: 0.6rem 0.8rem;
+
+	border: 1px solid var(--am-color-border);
+	border-radius: var(--am-radius);
+
+	background: var(--am-color-bg);
+	color: var(--am-color-text);
+}
+
+textarea {
+	min-height: 140px;
+	resize: vertical;
+}
+
+button,
+input[type="submit"],
+input[type="button"],
+input[type="reset"] {
+	width: auto;
+	max-width: 100%;
+
+	background: var(--am-color-primary);
+	color: #fff;
+
+	border: none;
+	border-radius: var(--am-radius);
+
+	cursor: pointer;
+}
+
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+input[type="reset"]:hover {
+	background: var(--am-color-primary-dark);
+}
+
+
+/* =========================================================
+ * 24. COMMENTS
+ * ========================================================= */
+
+.comment-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.comment-list li {
+	padding-block: var(--am-space-2);
+
+	border-top: 1px solid var(--am-color-border);
+}
+
+
+/* =========================================================
+ * 25. LANDING TEMPLATE
+ * ========================================================= */
+
+.landing-main {
+	width: 100%;
+	max-width: 100%;
+}
+
+.landing-main .entry-content {
+	width: 95%;
+	max-width: 1400px;
+
+	margin-inline: auto;
+
+	padding-block: var(--am-space-2);
+
+	display: flow-root;
+}
+
+
+/* =========================================================
+ * 26. SEARCH PARTNERS / DIRECTORY SAFETY
+ *
+ * Dedicated defensive rules for the widget shown in the
+ * supplied screenshot.
+ * ========================================================= */
+
+.search-partners,
+.search-partners-widget,
+.partner-directory,
+.partner-directory-widget,
+.partner-list,
+.partner-listing,
+.partner-listings,
+.partner-results,
+.partner-results-grid,
+.partner-grid,
+.partner-grid-wrapper,
+.service-directory,
+.service-directory-widget,
+.service-listing,
+.service-listings,
+.service-provider-list,
+.service-provider-grid,
+.provider-directory,
+.provider-list,
+.compare-list,
+.compare-grid {
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+
+	margin-bottom: var(--am-space-4);
+
+	clear: both;
+
+	display: flow-root;
+
+	position: relative;
+
+	overflow: visible;
+}
+
+/*
+ * Search/filter controls.
+ */
+.search-partners form,
+.search-partners-widget form,
+.partner-directory form,
+.partner-directory-widget form {
+	width: 100%;
+	max-width: 100%;
+
+	margin: 0 0 var(--am-space-3);
+}
+
+/*
+ * Card grids.
+ */
+.search-partners .grid,
+.search-partners .grid-container,
+.search-partners .cards,
+.search-partners .card-grid,
+.search-partners-widget .grid,
+.search-partners-widget .cards,
+.partner-directory .grid,
+.partner-directory .cards,
+.partner-directory .card-grid,
+.partner-grid,
+.partner-results-grid,
+.service-provider-grid {
+	display: grid;
+
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+
+	grid-template-columns:
+		repeat(
+			auto-fit,
+			minmax(min(240px, 100%), 1fr)
+		);
+
+	gap: var(--am-space-3);
+
+	align-items: stretch;
+
+	clear: both;
+}
+
+/*
+ * Cards must participate in normal document flow.
+ */
+.search-partners .card,
+.search-partners .partner-card,
+.search-partners .listing-card,
+.search-partners-widget .card,
+.search-partners-widget .partner-card,
+.partner-directory .card,
+.partner-directory .partner-card,
+.partner-directory .listing-card,
+.partner-card,
+.partner-listing-card,
+.service-provider-card,
+.provider-card {
+	position: relative;
+
+	display: flex;
+	flex-direction: column;
+
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+
+	height: auto;
+	min-height: 0;
+
+	margin: 0;
+
+	overflow: visible;
+
+	clear: none;
+}
+
+/*
+ * Images cannot push cards outside their parent.
+ */
+.search-partners img,
+.search-partners-widget img,
+.partner-directory img,
+.partner-directory-widget img,
+.partner-card img,
+.partner-listing-card img,
+.service-provider-card img,
+.provider-card img {
+	max-width: 100%;
+	height: auto;
+	object-fit: contain;
+}
+
+/*
+ * Buttons stay inside cards.
+ */
+.search-partners button,
+.search-partners a.button,
+.search-partners .button,
+.partner-directory button,
+.partner-directory a.button,
+.partner-directory .button,
+.partner-card button,
+.partner-card .button {
+	max-width: 100%;
+}
+
+/*
+ * Any legacy floated listing cards are explicitly cleared
+ * by the grid/listing wrapper.
+ */
+.search-partners::after,
+.search-partners-widget::after,
+.partner-directory::after,
+.partner-directory-widget::after,
+.partner-list::after,
+.partner-listing::after,
+.partner-results::after,
+.partner-grid::after,
+.service-directory::after,
+.service-listing::after,
+.service-provider-list::after,
+.provider-directory::after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+
+/* =========================================================
+ * 27. SHORTCODE SECTION SEPARATION
+ * ========================================================= */
+
+/*
+ * Prevent a following page heading from moving upward into
+ * a dynamically generated shortcode.
+ */
+.entry-content > .search-partners,
+.entry-content > .search-partners-widget,
+.entry-content > .partner-directory,
+.entry-content > .partner-directory-widget,
+.entry-content > .partner-list,
+.entry-content > .partner-listing,
+.entry-content > .partner-listings,
+.entry-content > .partner-results,
+.entry-content > .partner-results-grid,
+.entry-content > .partner-grid,
+.entry-content > .service-directory,
+.entry-content > .service-listing,
+.entry-content > .service-listings,
+.entry-content > .service-provider-list,
+.entry-content > .service-provider-grid,
+.entry-content > .provider-directory,
+.entry-content > .provider-list,
+.entry-content > .compare-list,
+.entry-content > .compare-grid {
+	margin-bottom: var(--am-space-4);
+}
+
+/*
+ * Any heading immediately following a shortcode gets normal
+ * document separation.
+ */
+.entry-content
+	.search-partners
+	+ h1,
+.entry-content
+	.search-partners
+	+ h2,
+.entry-content
+	.search-partners
+	+ h3,
+.entry-content
+	.partner-directory
+	+ h1,
+.entry-content
+	.partner-directory
+	+ h2,
+.entry-content
+	.partner-directory
+	+ h3,
+.entry-content
+	.partner-grid
+	+ h1,
+.entry-content
+	.partner-grid
+	+ h2,
+.entry-content
+	.partner-grid
+	+ h3 {
+	clear: both;
+
+	margin-top: var(--am-space-4);
+}
+
+
+/* =========================================================
+ * 28. TABLET
+ * ========================================================= */
+
+@media (max-width: 900px) {
+
+	html,
+	body,
+	#page,
+	#page.site,
+	.site {
+		width: 100%;
+		max-width: 100%;
+		min-width: 0;
+	}
+
+	.container,
+	body.container-wide .container {
+		width: 100%;
+		max-width: none;
+
+		padding-inline: var(--am-space-2);
+	}
+
+	body.container-fluid .container {
+		padding-inline: var(--am-space-2);
+	}
+
+	.layout-wrap {
+		display: flex;
+
+		flex-direction: column;
+		flex-wrap: nowrap;
+
+		width: 100%;
+		max-width: 100%;
+
+		margin-inline: auto;
+
+		padding:
+			var(--am-space-3)
+			var(--am-space-2);
+
+		gap: var(--am-space-3);
+	}
+
+	#primary {
+		flex: none;
+
+		width: 100%;
+		max-width: 100%;
+		min-width: 0;
+	}
+
+	#secondary {
+		flex: none;
+
+		order: 2;
+
+		width: 100%;
+		max-width: 100%;
+		min-width: 0;
+	}
+
+	#primary.content-scrollable {
+		overflow: visible;
+		padding-right: 0;
+	}
+
+	/* Header */
+
+	.header-top-inner {
+		flex-direction: column;
+
+		justify-content: center;
+		align-items: center;
+
+		width: 100%;
+		max-width: 100%;
+
+		text-align: center;
+	}
+
+	.header-branding-group {
+		flex-direction: column;
+
+		justify-content: center;
+		align-items: center;
+
+		width: 100%;
+		max-width: 100%;
+
+		gap: 0.25rem;
+	}
+
+	.header-branding-center {
+		width: 100%;
+		max-width: 100%;
+
+		text-align: center;
+	}
+
+	.header-right-group {
+		flex-direction: column;
+
+		width: 100%;
+		max-width: 100%;
+
+		margin-inline: auto;
+	}
+
+	.header-branding-cta {
+		max-width: 100%;
+	}
+
+	.custom-logo {
+		max-height: 60px;
+	}
+
+	.site-title {
+		font-size: clamp(1.4rem, 6vw, 1.7rem);
+	}
+
+	.site-description {
+		font-size: 0.85rem;
+	}
+
+	.header-cta-button {
+		max-width: 100%;
+
+		white-space: normal;
+		text-align: center;
+	}
+
+	/* Navigation */
+
+	.nav-inner {
+		display: flex;
+
+		flex-direction: column;
+
+		align-items: flex-start;
+		justify-content: flex-start;
+
+		width: 100%;
+		max-width: 100%;
+
+		padding-block: var(--am-space-1);
+	}
+
+	.menu-toggle {
+		display: flex;
+
+		flex-direction: column;
+
+		align-items: center;
+		justify-content: center;
+
+		width: 44px;
+		height: 44px;
+
+		position: static;
+	}
+
+	.main-navigation ul#primary-menu {
+		display: none;
+
+		flex-direction: column;
+		align-items: stretch;
+
+		width: 100%;
+		max-width: 100%;
+
+		gap: 0;
+
+		text-align: left;
+	}
+
+	.main-navigation.is-open ul#primary-menu {
+		display: flex;
+	}
+
+	.main-navigation li {
+		width: 100%;
+		max-width: 100%;
+	}
+
+	.main-navigation a {
+		width: 100%;
+		padding: 0.8rem 0.5rem;
+	}
+
+	.main-navigation ul ul {
+		position: static;
+
+		width: 100%;
+		min-width: 0;
+
+		display: none;
+
+		box-shadow: none;
+
+		padding-left: var(--am-space-2);
+	}
+
+	.main-navigation li.menu-item-has-children.is-open > ul {
+		display: flex;
+	}
+
+	/* Archive */
+
+	body.blog-columns-2 .post-list,
+	body.blog-columns-3 .post-list {
+		grid-template-columns: 1fr;
+	}
+
+	/* Partner cards */
+
+	.search-partners .grid,
+	.search-partners .grid-container,
+	.search-partners .cards,
+	.search-partners .card-grid,
+	.search-partners-widget .grid,
+	.search-partners-widget .cards,
+	.partner-directory .grid,
+	.partner-directory .cards,
+	.partner-directory .card-grid,
+	.partner-grid,
+	.partner-results-grid,
+	.service-provider-grid {
+		grid-template-columns:
+			repeat(
+				2,
+				minmax(0, 1fr)
+			);
+	}
+
+	/* Footer */
+
+	.footer-columns-2,
+	.footer-columns-3,
+	.footer-columns-4 {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	/* An odd last widget spans the full row so tablets look balanced. */
+	.footer-columns-3 > .footer-widget-area:last-child {
+		grid-column: 1 / -1;
+	}
+
+	.site-info {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.footer-navigation ul {
+		flex-wrap: wrap;
+		gap: 0.5rem 1rem;
+	}
+
+	.landing-main .entry-content {
+		width: 100%;
+		padding-inline: var(--am-space-2);
+	}
+}
+
+
+/* =========================================================
+ * 29. MOBILE
+ * ========================================================= */
+
+@media (max-width: 600px) {
+
+	body {
+		font-size: 16px;
+	}
+
+	.container,
+	body.container-wide .container,
+	body.container-fluid .container {
+		width: 100%;
+		max-width: 100%;
+
+		padding-inline: var(--am-space-2);
+	}
+
+	.layout-wrap {
+		width: 100%;
+		max-width: 100%;
+
+		padding:
+			var(--am-space-2)
+			var(--am-space-2);
+	}
+
+	.search-partners .grid,
+	.search-partners .grid-container,
+	.search-partners .cards,
+	.search-partners .card-grid,
+	.search-partners-widget .grid,
+	.search-partners-widget .cards,
+	.partner-directory .grid,
+	.partner-directory .cards,
+	.partner-directory .card-grid,
+	.partner-grid,
+	.partner-results-grid,
+	.service-provider-grid {
+		grid-template-columns: 1fr;
+
+		gap: var(--am-space-2);
+	}
+
+	.post-list {
+		grid-template-columns: 1fr;
+	}
+
+	.footer-columns-2,
+	.footer-columns-3,
+	.footer-columns-4 {
+		grid-template-columns: 1fr;
+	}
+
+	.footer-widgets-wrap {
+		padding-block: var(--am-space-3);
+	}
+
+	.site-info {
+		padding-block: var(--am-space-2);
+
+		font-size: 0.85rem;
+	}
+
+	.footer-topbar-inner {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.footer-row + .footer-row {
+		padding-top: var(--am-space-3);
+	}
+
+	.footer-navigation ul {
+		width: 100%;
+	}
+
+	.social-icons {
+		max-width: 100%;
+	}
+
+	.search-form {
+		flex-direction: column;
+	}
+
+	.search-field,
+	.search-submit {
+		width: 100%;
+		flex-basis: auto;
+	}
+
+	.am-hero {
+		padding-block: var(--am-space-4);
+	}
+
+	.am-section {
+		padding-block: var(--am-space-4);
+	}
+
+	.am-cta-band {
+		padding-block: var(--am-space-3);
+	}
+
+	/*
+	 * Mobile content separation.
+	 */
+	.entry-content > * {
+		clear: both;
+	}
+
+	.entry-content > .search-partners,
+	.entry-content > .search-partners-widget,
+	.entry-content > .partner-directory,
+	.entry-content > .partner-directory-widget,
+	.entry-content > .partner-grid,
+	.entry-content > .service-directory,
+	.entry-content > .service-listing {
+		margin-bottom: var(--am-space-4);
+	}
+}
+
+
+/* =========================================================
+ * 30. SMALL MOBILE
+ * ========================================================= */
+
+@media (max-width: 480px) {
+
+	.layout-wrap {
+		padding:
+			var(--am-space-2)
+			0.75rem;
+	}
+
+	.container,
+	body.container-wide .container,
+	body.container-fluid .container {
+		padding-inline: 0.75rem;
+	}
+
+	.footer-widgets-wrap {
+		padding-block: var(--am-space-3);
+	}
+
+	.site-info {
+		padding-block: var(--am-space-2);
+	}
+
+	.am-hero {
+		padding-block: var(--am-space-4);
+	}
+
+	.am-section {
+		padding-block: var(--am-space-4);
+	}
+
+	.am-cta-band {
+		padding-block: var(--am-space-3);
+	}
+}
+
+
+/* =========================================================
+ * 31. REDUCED MOTION
+ * ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+	*,
+	*::before,
+	*::after {
+		scroll-behavior: auto !important;
+
+		transition-duration: 0.01ms !important;
+
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+	}
+}
+
+
+/* =========================================================
+ * 32. WordPress ADMIN BAR
+ * ========================================================= */
+
+.admin-bar .skip-link.screen-reader-text:focus {
+	top: 32px;
+}
+
+@media (max-width: 782px) {
+
+	.admin-bar .skip-link.screen-reader-text:focus {
+		top: 46px;
+	}
+}
+
+
+/* =========================================================
+ * 33. STICKY FOOTER / PAGE HEIGHT
+ * ========================================================= */
+
+html,
+body {
+	min-height: 100%;
+}
+
+#page.site {
+	display: flex;
+
+	flex-direction: column;
+
+	width: 100%;
+	max-width: 100%;
+
+	min-height: 100vh;
+	min-height: 100dvh;
+
+	margin: 0;
+	padding: 0;
+}
+
+#page.site > .site-header,
+#page.site > header.site-header {
+	flex: 0 0 auto;
+}
+
+#page.site > .site-main,
+#page.site > main.site-main,
+#page.site > .site-content {
+	flex: 1 0 auto;
+
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+
+	margin-bottom: 0;
+}
+
+.site-main,
+.site-content {
+	min-width: 0;
+}
+
+#page.site > .site-footer,
+#page.site > footer.site-footer {
+	flex: 0 0 auto;
+
+	width: 100%;
+	max-width: 100%;
+
+	height: auto;
+	min-height: 0;
+
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.site-footer {
+	height: auto;
+	min-height: 0;
+
+	margin-bottom: 0;
+}
+
+.footer-widgets,
+.site-info {
+	height: auto;
+	min-height: 0;
+}
+
+.site-footer p:last-child,
+.site-footer ul:last-child,
+.site-footer ol:last-child,
+.site-footer .widget:last-child {
+	margin-bottom: 0;
+}
+
+#page.site > *:last-child {
+	margin-bottom: 0;
+}
+
+
+/* =========================================================
+ * 34. ADMIN BAR PAGE HEIGHT
+ * ========================================================= */
+
+.admin-bar #page.site {
+	min-height: calc(100vh - 32px);
+	min-height: calc(100dvh - 32px);
+}
+
+@media (max-width: 782px) {
+
+	.admin-bar #page.site {
+		min-height: calc(100vh - 46px);
+		min-height: calc(100dvh - 46px);
+	}
+}
+
+
+/* =========================================================
+ * 35. PRINT
+ * ========================================================= */
+
+@media print {
+
+	.site-header,
+	.site-footer,
+	.main-navigation,
+	.sidebar-right,
+	.sidebar-left,
+	#secondary {
+		display: none !important;
+	}
+
+	#primary,
+	.site-main,
+	.site-content,
+	.container {
+		width: 100% !important;
+		max-width: 100% !important;
+
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+
+	a {
+		color: #000;
+		text-decoration: underline;
+	}
+
+	body {
+		background: #fff;
+		color: #000;
+	}
+}
+
+/* =========================================================
+ * 33. EDGE SPACING GUARANTEES
+ *
+ * Keeps header, navigation and footer content away from the
+ * screen edge at every breakpoint (including notched phones).
+ * Placed last so breakpoint .container rules cannot remove it.
+ * ========================================================= */
+
+body .site-header .header-top-inner,
+body .site-header .nav-inner {
+	padding-left: max(var(--am-gutter), env(safe-area-inset-left));
+	padding-right: max(var(--am-gutter), env(safe-area-inset-right));
+}
+
+
+/* =========================================================
+ * 34. WordPress CORE CLASSES (alignment, captions, gallery, sticky)
+ * ========================================================= */
+
+.alignleft {
+	float: left;
+	margin: 0.25em 1.5em 1em 0;
+}
+
+.alignright {
+	float: right;
+	margin: 0.25em 0 1em 1.5em;
+}
+
+.aligncenter {
+	display: block;
+	clear: both;
+	margin-inline: auto;
+}
+
+.wp-caption {
+	max-width: 100%;
+	margin-bottom: var(--am-space-2);
+}
+
+.wp-caption img {
+	display: block;
+	margin-inline: auto;
+}
+
+.wp-caption-text,
+.gallery-caption {
+	margin: 0.5em 0 0;
+
+	font-size: 0.875rem;
+	line-height: 1.5;
+
+	color: var(--am-color-muted);
+	text-align: center;
+}
+
+.sticky {
+	position: relative;
+}
+
+.sticky .entry-title::before {
+	content: "\2605\00a0";
+
+	color: var(--am-color-primary);
+}
+
+.bypostauthor > .comment-body .fn::after {
+	content: "";
+
+	display: inline-block;
+
+	width: 0.5em;
+	height: 0.5em;
+	margin-inline-start: 0.4em;
+
+	border-radius: 50%;
+
+	background: var(--am-color-primary);
+}
+
+@media (max-width: 600px) {
+
+	.alignleft,
+	.alignright {
+		float: none;
+		display: block;
+		margin: 0 auto var(--am-space-2);
+	}
+}
+
+
+/* Block styles registered in functions.php */
+
+.wp-block-button.is-style-am-soft .wp-block-button__link {
+	background: rgba(11, 95, 255, 0.1);
+	color: var(--am-color-primary);
+}
+
+.wp-block-button.is-style-am-soft .wp-block-button__link:hover {
+	background: rgba(11, 95, 255, 0.18);
+}
+
+.wp-block-group.is-style-am-card {
+	padding: var(--am-space-3);
+
+	border: 1px solid var(--am-color-border);
+	border-radius: var(--am-radius);
+
+	background: var(--am-color-bg);
+}
